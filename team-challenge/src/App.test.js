@@ -13,20 +13,21 @@ it('renders without crashing', () => {
 });
 
 //test the reset function
-describe('reset button', () => {
-  it('fill in random text', () => {
+describe('Reset button', () => {
+  it('fill in random text then press reset button, should clear out the written text', () => {
       const signUpForm = mount(<SignUpForm />);
       const button = signUpForm.find('#resetButton');
       const input = signUpForm.find('#email');
       input.simulate('change', {target:{value:'fake@fake.com'}});
+      expect(input.html()).toEqual('<input type="email" id="email" name="email" class="form-control" placeholder="email address" value="fake@fake.com">');
       button.simulate('click');
       expect(input.html()).toEqual('<input type="email" id="email" name="email" class="form-control alert-danger" placeholder="email address" value="">');
   });
-})
+});
 
 //test the submit function of the form
-describe('submit button', () => {
-  it('fill in text then press submit button', () => {
+describe('Submit button', () => {
+  it('fill in random text then submit the form, should show the congratulated message', () => {
       const overallApp = mount(<SignUpForm />);
       const form = overallApp.find('form');
       const nameInput = overallApp.find('#name');
@@ -41,9 +42,9 @@ describe('submit button', () => {
       passwordConfirmInput.simulate('change', {target:{value:'hello'}});      
       form.simulate('submit');//submit the form instead of pressing the sign up button
       const congratulateBox = overallApp.find('.alert-success');
-      expect(congratulateBox.text()).toEqual('Thanks for signing up!')
+      expect(congratulateBox.text()).toEqual('Thanks for signing up!');
   });
-})
+});
 
 //test if the name field is empty
 describe('<RequiredInput /> name component', () => {

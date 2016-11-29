@@ -11,6 +11,8 @@ Yiran Juan - #4
 Quan Nguyen - #6, #7
 Cheng, Long, Juan -> Debugging 
 
+/* We've completed the moment.js extra credit, thanks! :) */
+
 _Note: If there are any issues with group collaboration, let me know now **before** the final project!_
 
 

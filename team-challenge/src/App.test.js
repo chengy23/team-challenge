@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import {shallow, mount} from 'enzyme';
-import sinon from 'sinon';
 import SignUpForm,{RequiredInput, PasswordConfirmationInput, EmailInput, BirthdayInput} from './TeamSignUp';
 
 //render the App, return a "wrapper" for the root elem
@@ -37,7 +36,7 @@ describe('Submit button', () => {
       const emailInput = overallApp.find('#email');
       nameInput.simulate('change', {target:{value:'Quan'}});
       emailInput.simulate('change', {target:{value:'fake@fake.com'}});
-      dobInput.simulate('change', {target:{value:'1/20/1996'}});
+      dobInput.simulate('change', {target:{value:'23/20/1996'}});
       passwordInput.simulate('change', {target:{value:'hello'}});
       passwordConfirmInput.simulate('change', {target:{value:'hello'}});      
       form.simulate('submit');//submit the form instead of pressing the sign up button

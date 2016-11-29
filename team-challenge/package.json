@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.7.0"
+    "enzyme": "^2.6.0",
+    "react-addons-test-utils": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-scripts": "0.7.0",
+    "sinon": "^1.17.6",
+    "sinon-spy-react": "^2.0.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",

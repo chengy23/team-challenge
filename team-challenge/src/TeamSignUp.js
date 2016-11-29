@@ -29,7 +29,6 @@ class SignUpForm extends React.Component {
   //callback for the reset button
   handleReset(event) {
     event.preventDefault();
-    console.log('Reset!');
     this.setState( { email:{value:'',valid:false}, 
       name:{value:'',valid:false},
       dob:{value:'',valid:false},
@@ -41,7 +40,6 @@ class SignUpForm extends React.Component {
   //callback for the submit button
   handleSubmit(event) {
     event.preventDefault();
-    console.log('Submitted!');
     this.setState({success: true});
     //this.props.submitCallback(this.state);
   }
@@ -53,7 +51,7 @@ class SignUpForm extends React.Component {
 
     return (
       <form name="signupForm" onSubmit={(e) => this.handleSubmit(e)}>
-        {this.state.success && <div className="alert alert-success" role="alert">
+        {this.state.success && <div id="successDiv" className="alert alert-success" role="alert">
             Thanks for signing up!
           </div>
         }

@@ -255,7 +255,7 @@ class BirthdayInput extends React.Component {
     return (
       <div className={groupStyle}>
         <label htmlFor="dob">Birthdate</label>
-        <input type="text" id="dob" name="dob" className={inputStyle} placeholder="your birthdate"
+        <input type="text" id="dob" name="dob" className={inputStyle} placeholder="your birthdate (format: 'MM/DD/YYYY' or 'YYYY-MM-DD')"
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />

@@ -23,7 +23,7 @@ describe('Reset button', () => {
       button.simulate('click');
       expect(input.html()).toEqual('<input type="email" id="email" name="email" class="form-control alert-danger" placeholder="email address" value="">');
   });
-});
+}); 
 
 //test the submit function of the form
 describe('Submit button', () => {
@@ -136,7 +136,7 @@ describe('<BirthdayInput> component', () => {
   });
 
   it('should display error message if the age input doesnt meet the requirement', () => {
-    const wrapper = shallow(<BirthdayInput value='Mar 25 2015'/>); 
+    const wrapper = shallow(<BirthdayInput value='03-25-2015'/>); 
     expect(wrapper.find('.error-not-old').text()).toEqual("sorry, you must be at least 13 to sign up")//expect there is no message for age limit
     || expect(wrapper.find('.error-missing').length).toEqual(0) //expect there is no message for missing input
     || expect(wrapper.find('.error-invalid').length).toEqual(0); //expect there is no message for invalid output

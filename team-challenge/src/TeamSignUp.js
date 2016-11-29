@@ -214,7 +214,7 @@ class BirthdayInput extends React.Component {
     var timestamp = Date.parse(currentValue); //use built-in Date type
     var d = new Date(); //today
     var today = d.getTime();
-    if(isNaN(timestamp) || (timestamp > today) || !(moment(currentValue, ['MM/DD/YYYY', 'YYYY-MM-DD'], true).isValid())) { //it not a valid stamp
+    if(isNaN(timestamp) || (timestamp > today) || (moment(currentValue, ['MM/DD/YYYY', 'YYYY-MM-DD'], true).isValid())) { //it not a valid stamp
       return {notDate:true, isValid:false};
     }
 

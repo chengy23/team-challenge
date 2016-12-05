@@ -25,7 +25,7 @@ ReactDOM.render(
       <Route path="register" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
       <Route path="home" component={Home} />
-      <Route path="professor" component={Professor} />
+      <Route path="professor/:prof_class_id" component={Professor} />
     </Route>
   </Router>,
   document.getElementById('root')

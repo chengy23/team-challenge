@@ -13,8 +13,7 @@ class App extends Component {
     firebase.auth().onAuthStateChanged((firebaseUser) => {
       if(firebaseUser){
         this.setState({userId: firebaseUser.uid});
-        //hashHistory.push('/home');
-        hashHistory.push('/professor');
+        hashHistory.push('/home');
       }else{
         this.setState({userId: null});
         hashHistory.push('/login');

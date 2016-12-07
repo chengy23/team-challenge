@@ -16,11 +16,24 @@ describe('Reset button', () => {
   it('fill in random text then press reset button, should clear out the written text', () => {
       const signUpForm = mount(<SignUpForm />);
       const button = signUpForm.find('#resetButton');
-      const input = signUpForm.find('#email');
-      input.simulate('change', {target:{value:'fake@fake.com'}});
-      expect(input.html()).toEqual('<input type="email" id="email" name="email" class="form-control" placeholder="email address" value="fake@fake.com">');
+      const nameInput = signUpForm.find('#name');
+      const dobInput = signUpForm.find('#dob');
+      const passwordInput = signUpForm.find('#password');
+      const passwordConfirmInput = signUpForm.find('#passwordConf');
+      const emailInput = signUpForm.find('#email');
+      emailInput.simulate('change', {target:{value:'fake@fake.com'}});
+      dobInput.simulate('change', {target:{value:'23/20/1996'}});
+      passwordInput.simulate('change', {target:{value:'hello'}});
+      passwordConfirmInput.simulate('change', {target:{value:'hello'}}); 
+      expect(emailInput.html()).toEqual('<input type="email" id="email" name="email" class="form-control" placeholder="email address" value="fake@fake.com">');
+      expect(dobInput.html()).toEqual('<input type="text" id="dob" name="dob" class="form-control alert-danger" placeholder="your birthdate (format: \'MM/DD/YYYY\' or \'YYYY-MM-DD\')" value="23/20/1996">');
+      expect(passwordInput.html()).toEqual('<input type="password" id="password" name="password" class="form-control" placeholder="your secret password" value="hello">');
+      expect(passwordConfirmInput.html()).toEqual('<input type="password" id="passwordConf" name="passwordConf" placeholder="your secret password again" class="form-control" value="hello">');
       button.simulate('click');
-      expect(input.html()).toEqual('<input type="email" id="email" name="email" class="form-control alert-danger" placeholder="email address" value="">');
+      expect(emailInput.html()).toEqual('<input type="email" id="email" name="email" class="form-control alert-danger" placeholder="email address" value="">');
+      expect(dobInput.html()).toEqual('<input type="text" id="dob" name="dob" class="form-control alert-danger" placeholder="your birthdate (format: \'MM/DD/YYYY\' or \'YYYY-MM-DD\')" value="">');
+      expect(passwordInput.html()).toEqual('<input type="password" id="password" name="password" class="form-control alert-danger" placeholder="your secret password" value="">');
+      expect(passwordConfirmInput.html()).toEqual('<input type="password" id="passwordConf" name="passwordConf" placeholder="your secret password again" class="form-control" value="">');
   });
 }); 
 
@@ -29,6 +42,7 @@ describe('Submit button', () => {
   it('fill in random text then submit the form, should show the congratulated message', () => {
       const overallApp = mount(<SignUpForm />);
       const form = overallApp.find('form');
+            console.log(form.html());  
       const nameInput = overallApp.find('#name');
       const dobInput = overallApp.find('#dob');
       const passwordInput = overallApp.find('#password');
@@ -38,7 +52,7 @@ describe('Submit button', () => {
       emailInput.simulate('change', {target:{value:'fake@fake.com'}});
       dobInput.simulate('change', {target:{value:'23/20/1996'}});
       passwordInput.simulate('change', {target:{value:'hello'}});
-      passwordConfirmInput.simulate('change', {target:{value:'hello'}});      
+      passwordConfirmInput.simulate('change', {target:{value:'hello'}});    
       form.simulate('submit');//submit the form instead of pressing the sign up button
       const congratulateBox = overallApp.find('.alert-success');
       expect(congratulateBox.text()).toEqual('Thanks for signing up!');

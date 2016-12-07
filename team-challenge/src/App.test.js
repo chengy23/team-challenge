@@ -106,6 +106,7 @@ describe('Submit button', () => {
       expect(overallApp.find('#submitButton').prop('disabled')).toEqual(true);  
       form.simulate('submit');//submit the form instead of pressing the sign up button
       const congratulateBox = overallApp.find('.alert-success');
+      expect(congratulateBox.text()).toEqual('Thanks for signing up!');
   });
 });
 

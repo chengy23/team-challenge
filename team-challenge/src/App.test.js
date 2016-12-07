@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {shallow, mount} from 'enzyme';
 import SignUpForm,{RequiredInput, PasswordConfirmationInput, EmailInput, BirthdayInput} from './TeamSignUp';
+import sinon from 'sinon';
+
 
 //render the App, return a "wrapper" for the root elem
 const wrapper = shallow(<App />);
@@ -35,14 +37,23 @@ describe('Reset button', () => {
       expect(passwordInput.html()).toEqual('<input type="password" id="password" name="password" class="form-control alert-danger" placeholder="your secret password" value="">');
       expect(passwordConfirmInput.html()).toEqual('<input type="password" id="passwordConf" name="passwordConf" placeholder="your secret password again" class="form-control" value="">');
   });
+
+  it ('should be able to call the handle reset function', () => {
+    var resetSpy = sinon.spy(SignUpForm.prototype, 'handleReset')
+    
+    const wrapper=mount(<SignUpForm />);
+
+    wrapper.find('#resetButton').simulate('click');
+
+    expect(resetSpy.called).toEqual(true);
+  });
 }); 
 
 //test the submit function of the form
 describe('Submit button', () => {
-  it('fill in random text then submit the form, should show the congratulated message', () => {
+  it('fill in random text then submit the form, button should be enable if all info is valid', () => {
       const overallApp = mount(<SignUpForm />);
       const form = overallApp.find('form');
-            console.log(form.html());  
       const nameInput = overallApp.find('#name');
       const dobInput = overallApp.find('#dob');
       const passwordInput = overallApp.find('#password');
@@ -52,7 +63,47 @@ describe('Submit button', () => {
       emailInput.simulate('change', {target:{value:'fake@fake.com'}});
       dobInput.simulate('change', {target:{value:'23/20/1996'}});
       passwordInput.simulate('change', {target:{value:'hello'}});
-      passwordConfirmInput.simulate('change', {target:{value:'hello'}});    
+      passwordConfirmInput.simulate('change', {target:{value:'hello'}});  
+      expect(overallApp.find('#submitButton').prop('disabled')).toEqual(true);  
+      form.simulate('submit');//submit the form instead of pressing the sign up button
+      const congratulateBox = overallApp.find('.alert-success');
+      expect(congratulateBox.text()).toEqual('Thanks for signing up!');
+  });
+
+  it('callback submit in App should be called', () => {
+    // set up a sinon spy on the handleSubmit callback of the app
+    const handleSubmitSpy = sinon.spy(SignUpForm.prototype, 'handleSubmit');
+    const overallApp=mount(<SignUpForm />);
+    const form = overallApp.find('form');
+    const nameInput = overallApp.find('#name');
+    const dobInput = overallApp.find('#dob');
+    const passwordInput = overallApp.find('#password');
+    const passwordConfirmInput = overallApp.find('#passwordConf');
+    const emailInput = overallApp.find('#email');
+    nameInput.simulate('change', {target:{value:'Quan'}});
+    emailInput.simulate('change', {target:{value:'fake@fake.com'}});
+    dobInput.simulate('change', {target:{value:'23/20/1996'}});
+    passwordInput.simulate('change', {target:{value:'hello'}});
+    passwordConfirmInput.simulate('change', {target:{value:'hello'}});  
+    
+    overallApp.find('form').simulate('submit');
+    expect(handleSubmitSpy.called).toEqual(true); 
+  });
+
+  it('should show a congratulate box when the form is submitted', () => {
+      const overallApp = mount(<SignUpForm />);
+      const form = overallApp.find('form');
+      const nameInput = overallApp.find('#name');
+      const dobInput = overallApp.find('#dob');
+      const passwordInput = overallApp.find('#password');
+      const passwordConfirmInput = overallApp.find('#passwordConf');
+      const emailInput = overallApp.find('#email');
+      nameInput.simulate('change', {target:{value:'Quan'}});
+      emailInput.simulate('change', {target:{value:'fake@fake.com'}});
+      dobInput.simulate('change', {target:{value:'23/20/1996'}});
+      passwordInput.simulate('change', {target:{value:'hello'}});
+      passwordConfirmInput.simulate('change', {target:{value:'hello'}});  
+      expect(overallApp.find('#submitButton').prop('disabled')).toEqual(true);  
       form.simulate('submit');//submit the form instead of pressing the sign up button
       const congratulateBox = overallApp.find('.alert-success');
       expect(congratulateBox.text()).toEqual('Thanks for signing up!');

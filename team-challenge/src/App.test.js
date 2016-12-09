@@ -5,7 +5,6 @@ import {shallow, mount} from 'enzyme';
 import SignUpForm,{RequiredInput, PasswordConfirmationInput, EmailInput, BirthdayInput} from './TeamSignUp';
 import sinon from 'sinon';
 
-
 //render the App, return a "wrapper" for the root elem
 const wrapper = shallow(<App />);
 it('renders without crashing', () => {
@@ -123,6 +122,17 @@ describe('<RequiredInput /> name component', () => {
     //expect that there is no error message
     expect(wrapper.contains('.error-missing')).toEqual(false);
   });
+
+  it('should call updateParent', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<RequiredInput id="name" field="name" type="text"
+          label="Name" placeholder="your name"
+          errorMessage="we need to know your name"
+          value={''}
+          updateParent={spy}/>);
+    wrapper.find('#name').simulate('change', {target:{value: 'name'}});
+    expect(spy.called).toEqual(true);
+  });
 });
 
 //test if the password field is empty
@@ -137,6 +147,17 @@ describe('<RequiredInput /> password component', () => {
     const wrapper = shallow(<RequiredInput value={'123'} />);
     //expect that there is no error message
     expect(wrapper.contains('.error-missing')).toEqual(false);
+  });
+
+  it('should call updateParent', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<RequiredInput id="password" field="password" type="password"
+          label="Password" placeholder="your secret password"
+          errorMessage="your password can't be blank"
+          value={''} 
+          updateParent={spy}/>);
+    wrapper.find('#password').simulate('change', {target:{value: '123'}});
+    expect(spy.called).toEqual(true);
   });
 });
 
@@ -153,8 +174,15 @@ describe('<PasswordConfirmationInput /> component', () => {
     //expect that there is no error message
     expect(passwordConf.contains('.error-mismatched')).toEqual(false);
   });
-});
 
+  it('should call updateParent', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<PasswordConfirmationInput password={''} value={''} 
+          updateParent={spy}/>);
+    wrapper.find('#passwordConf').simulate('change', {target:{value: '123'}});
+    expect(spy.called).toEqual(true);
+  });
+});
 
 // this test checks the <EmailInput /> component:
 // if it pops up error message properly if it's either empty or invalid
@@ -178,6 +206,13 @@ describe('<EmailInput /> component', () => {
   it('should not warn anything if neither empty or invalid', () => {
     const wrapper = shallow(<EmailInput value={'ischool@uw.edu'}/>);
     expect(wrapper.find('.help-block').length).toEqual(0);
+  });
+
+  it('should call updateParent', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<EmailInput value={''} updateParent={spy}/>);
+    wrapper.find('#email').simulate('change', {target:{value: 'ischool@uw.edu'}});
+    expect(spy.called).toEqual(true);
   });
 });
 
@@ -212,5 +247,12 @@ describe('<BirthdayInput> component', () => {
     expect(wrapper.find('.error-not-old').text()).toEqual("sorry, you must be at least 13 to sign up")//expect there is no message for age limit
     || expect(wrapper.find('.error-missing').length).toEqual(0) //expect there is no message for missing input
     || expect(wrapper.find('.error-invalid').length).toEqual(0); //expect there is no message for invalid output
+  });
+
+  it('should call updateParent', () => {
+    const spy = sinon.spy();
+    const wrapper = shallow(<BirthdayInput value='' updateParent={spy} />);
+    wrapper.find("#dob").simulate('change', {target:{value: '2015-07-07'}});
+    expect(spy.called).toEqual(true);
   });
 })

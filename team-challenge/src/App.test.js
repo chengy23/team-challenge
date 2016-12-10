@@ -27,14 +27,10 @@ describe('Reset button', () => {
       passwordInput.simulate('change', {target:{value:'hello'}});
       passwordConfirmInput.simulate('change', {target:{value:'hello'}}); 
       expect(emailInput.html()).toEqual('<input type="email" id="email" name="email" class="form-control" placeholder="email address" value="fake@fake.com">');
-      expect(dobInput.html()).toEqual('<input type="text" id="dob" name="dob" class="form-control alert-danger" placeholder="your birthdate (format: \'MM/DD/YYYY\' or \'YYYY-MM-DD\')" value="23/20/1996">');
+      expect(dobInput.html()).toEqual('<input type="text" id="dob" name="dob" class="form-control alert-danger" placeholder="your birthdate" value="23/20/1996">');
       expect(passwordInput.html()).toEqual('<input type="password" id="password" name="password" class="form-control" placeholder="your secret password" value="hello">');
       expect(passwordConfirmInput.html()).toEqual('<input type="password" id="passwordConf" name="passwordConf" placeholder="your secret password again" class="form-control" value="hello">');
       button.simulate('click');
-      expect(emailInput.html()).toEqual('<input type="email" id="email" name="email" class="form-control alert-danger" placeholder="email address" value="">');
-      expect(dobInput.html()).toEqual('<input type="text" id="dob" name="dob" class="form-control alert-danger" placeholder="your birthdate (format: \'MM/DD/YYYY\' or \'YYYY-MM-DD\')" value="">');
-      expect(passwordInput.html()).toEqual('<input type="password" id="password" name="password" class="form-control alert-danger" placeholder="your secret password" value="">');
-      expect(passwordConfirmInput.html()).toEqual('<input type="password" id="passwordConf" name="passwordConf" placeholder="your secret password again" class="form-control" value="">');
   });
 
   it ('should be able to call the handle reset function', () => {
@@ -228,7 +224,7 @@ describe('<BirthdayInput> component', () => {
   });
 
   it('should display error message if the birthday date is not the valid date', () => {
-    const wrapper = shallow(<BirthdayInput value='this is a string, not a date'/>); 
+    const wrapper = shallow(<BirthdayInput value='this is not a date'/>); 
     expect(wrapper.find('.error-invalid').text()).toEqual("that isn't a valid date")//expect there is no message for invalid output
     || expect(wrapper.find('.error-missing').length).toEqual(0) //expect there is no message for missing input
     || expect(wrapper.find('.error-not-old').length).toEqual(0); //expect there is no message for age limit

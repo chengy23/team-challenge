@@ -211,17 +211,12 @@ class BirthdayInput extends React.Component {
     }
 
     //check date validity
-    var timestamp = Date.parse(currentValue); //use built-in Date type
-    var d = new Date(); //today
-    var today = d.getTime();
-    if(isNaN(timestamp) || (timestamp > today) || !(moment(currentValue, ['MM/DD/YYYY', 'YYYY-MM-DD'], true).isValid())) { //it not a valid stamp
-      return {notDate:true, isValid:false};
-    }
-
-    //check age range
-    d.setYear(d.getFullYear() - 13); //subtract 13 from the year
-    var minTimestamp = d.getTime();
-    if(timestamp > minTimestamp){
+    var inputDate = moment(currentValue, ['MM-DD-YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY']);
+    var now = moment();
+    if((inputDate > now) || !inputDate.isValid()) { //check if it's a valid birthdate
+      return {notDate:true, isValid:false};      
+    } 
+    if(now.diff(inputDate,'years') < 13){ // check if it's' 13 years old
       return {notOldEnough:true, isValid:false}
     }
 
@@ -255,7 +250,7 @@ class BirthdayInput extends React.Component {
     return (
       <div className={groupStyle}>
         <label htmlFor="dob">Birthdate</label>
-        <input type="text" id="dob" name="dob" className={inputStyle} placeholder="your birthdate (format: 'MM/DD/YYYY' or 'YYYY-MM-DD')"
+        <input type="text" id="dob" name="dob" className={inputStyle} placeholder="your birthdate"
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />

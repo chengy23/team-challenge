@@ -1,6 +1,6 @@
 {
   "name": "team-challenge",
-  "homepage": "https://chengy23.github.io/team-challenge/build",
+  "homepage": "https://chengy23.github.io/team-challenge/team-challenge/build/",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
